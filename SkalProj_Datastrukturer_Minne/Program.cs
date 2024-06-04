@@ -317,22 +317,22 @@ namespace SkalProj_Datastrukturer_Minne
                     {
                         case '}':
                             if (stack.Count == 0 ||stack.First<char>() != '{') { stringIsValid = false; }
-                            else { stack.Pop(); stringIsValid = true; }
+                            else { stack.Pop(); }
                             break;
 
                         case ']':
                             if (stack.Count == 0 || stack.First<char>() != '[') { stringIsValid = false; }
-                            else { stack.Pop(); stringIsValid = true; }
+                            else { stack.Pop(); }
                             break;
 
                         case ')':
                             if (stack.Count == 0 || stack.First<char>() != '(') { stringIsValid = false; }
-                            else { stack.Pop(); stringIsValid = true; }
+                            else { stack.Pop(); }
                             break;
                     }
                 }
-                if (stack.Count > 0) {stringIsValid = false; }
             }
+            if (stack.Count > 0) { stringIsValid = false; }
 
             Console.Clear();
             if (stringIsValid)
@@ -340,10 +340,7 @@ namespace SkalProj_Datastrukturer_Minne
                 Console.WriteLine("The input string has properly closed parantheses.\n");
             }
             else { Console.WriteLine("The input string did -not- have properly closed parantheses.\n"); }
-            //foreach (var item in string) -> itererar igenom varenda karaktär i strängen?
-
-        }
-
+         }
     }
 }
 
