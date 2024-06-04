@@ -21,6 +21,10 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParenthesis"
+                    + "\n5. Odd recursion"
+                    + "\n6. Even recursion"
+                    + "\n7. Fibonacchi sequence with recursion"
+                    + "\n8. Fibonnachi sequence with iteration"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
@@ -46,6 +50,18 @@ namespace SkalProj_Datastrukturer_Minne
                     case '4':
                         CheckParanthesis();
                         break;
+                    case '5':
+                        OddRecursion();
+                        break;
+                    case '6':
+                        EvenRecursion();
+                        break;
+                    case '7':
+                        FibonacchiSequenceRecursion();
+                        break;
+                    case '8':
+                        FibonnachiSequenceIteration();
+                        break;
                         
                     /*
                      * Extend the menu to include the recursive 
@@ -55,10 +71,82 @@ namespace SkalProj_Datastrukturer_Minne
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4)");
+                        Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4, 5, 6, 7, 8)");
                         break;
                 }
             }
+        }
+
+        private static void FibonnachiSequenceIteration()
+        {
+            Console.Clear();
+            Console.WriteLine("Calculate the Nth number in the Fibonacchi sequence where N is: ");
+            int i = int.Parse(Console.ReadLine()!);
+            Console.WriteLine("The " + i + "st/nd/rd/th number of the sequence is: " + RunIterativeFibonnachi(i));
+        }
+
+        private static void FibonacchiSequenceRecursion()
+        {
+            Console.Clear();
+            Console.WriteLine("Calculate the Nth number in the Fibonacchi sequence where N is: ");
+            int i = int.Parse(Console.ReadLine()!);
+            Console.WriteLine("The " + i + "st/nd/rd/th number of the sequence is: " + RunRecursiveFibonnachi(i));
+        }
+
+        private static void OddRecursion()
+        {
+            Console.Clear();
+            Console.WriteLine("Calculate the Nth odd number where N is:");
+            int i = int.Parse(Console.ReadLine()!);
+            Console.WriteLine(RecursiveOdd(i));
+        }
+        private static void EvenRecursion()
+        {
+            Console.Clear();
+            Console.WriteLine("Calculate the Nth even number where N is:");
+            int i = int.Parse(Console.ReadLine()!);
+            Console.WriteLine(RecursiveEven(i));
+        }
+
+        private static int RunRecursiveFibonnachi(int n)
+        {
+
+            if (n == 1) { return 0; }
+            else if (n == 2) { return 1; }
+            return RunRecursiveFibonnachi(n - 1) + RunRecursiveFibonnachi(n - 2);
+        }
+
+        private static int RunIterativeFibonnachi(int n)
+        {
+            if (n == 1) { return 0; }
+            else if (n == 2) { return 1; }
+
+            int a = 0, b = 1, c = 0;
+            for (int i = 2; i < n; i++)
+            {
+                c = a + b;
+                a = b;
+                b = c;
+            }
+            return b;
+        }
+
+
+        private static int RecursiveOdd(int n)
+        {
+            if (n == 1)
+            {
+                return 1;
+            }
+            return (RecursiveOdd(n - 1) + 2);
+        }
+        private static int RecursiveEven(int n)
+        {
+            if (n == 0)
+            {
+                return 0;
+            }
+            return (RecursiveEven(n - 1) + 2);
         }
 
         /// <summary>
@@ -77,7 +165,7 @@ namespace SkalProj_Datastrukturer_Minne
 
 
             Svar till frågor:
-             2. Kapaciteten ökar först när behover finns, alltså när ett element läggs i listan och mängden element blir högre än nuvarande kapacitet.
+             2. Kapaciteten ökar först när behovet finns, alltså när ett element läggs i listan och mängden element blir högre än nuvarande kapacitet.
 
              3. Kapaciteten ökar först med 4 (enligt standard, ska gå att justera), sedan fördubblas varje gång. I och med att listan aldrig minskar i kapacitet kan detta bli ett problem.
                 
@@ -202,9 +290,10 @@ namespace SkalProj_Datastrukturer_Minne
                     case '0':
                         running = false;
                         break;
+
                     default:
                         Console.Clear();
-                        Console.WriteLine("Please enter a valid input.");
+                        Console.WriteLine("Please enter a valid input. Start with either + or - and add your text after. To exit, simply write 0.");
                         break;
                 }
             }
@@ -229,7 +318,7 @@ namespace SkalProj_Datastrukturer_Minne
 
                 Console.WriteLine("You can add elements to the stack by adding a + prefix to a string e.g. " + '"' + "Adam" + '"' + ".\n" +
                     "You can remove elements from the stack by using the '-' command. \n" +
-                    "You can reverse and input string by using the 'r' command. \n" +
+                    "You can reverse an input string by using the 'r' command. \n" +
                     "To return back to the Main Menu, write 0.");
                 string input = Console.ReadLine()!;
                 char nav = ' ';
@@ -275,6 +364,7 @@ namespace SkalProj_Datastrukturer_Minne
                     case '0':
                         running = false;
                         break;
+
                     default:
                         Console.Clear();
                         Console.WriteLine("Please enter a valid input.");
@@ -306,7 +396,7 @@ namespace SkalProj_Datastrukturer_Minne
             //Om stacken är tom eller Pop'ade karaktären inte är korrekt öppningsparantes är strängen ogiltigt skriven.
             Stack<char> stack = new Stack<char>();
             bool stringIsValid = true;
-            Console.WriteLine("Input the string you would like to check:");
+            Console.WriteLine("Write the text you would like to check:");
             string str = Console.ReadLine()!;
             foreach (char c in str)
             {
