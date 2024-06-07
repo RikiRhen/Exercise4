@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+[assembly:InternalsVisibleTo("Exercise4.Tests")]
 
 namespace SkalProj_Datastrukturer_Minne
 {
-    class Program
+    public class Program
     {
         /// <summary>
         /// The main method, vill handle the menus for the program
@@ -62,11 +64,6 @@ namespace SkalProj_Datastrukturer_Minne
                     case '8':
                         FibonnachiSequenceIteration();
                         break;
-                        
-                    /*
-                     * Extend the menu to include the recursive 
-                     * and iterative exercises.
-                     */
                     case '0':
                         Environment.Exit(0);
                         break;
@@ -108,7 +105,7 @@ namespace SkalProj_Datastrukturer_Minne
             Console.WriteLine(RecursiveEven(i));
         }
 
-        private static int RunRecursiveFibonnachi(int n)
+        public static int RunRecursiveFibonnachi(int n)
         {
 
             if (n == 1) { return 0; }
@@ -116,7 +113,7 @@ namespace SkalProj_Datastrukturer_Minne
             return RunRecursiveFibonnachi(n - 1) + RunRecursiveFibonnachi(n - 2);
         }
 
-        private static int RunIterativeFibonnachi(int n)
+        public static int RunIterativeFibonnachi(int n)
         {
             if (n == 1) { return 0; }
             else if (n == 2) { return 1; }
@@ -132,7 +129,7 @@ namespace SkalProj_Datastrukturer_Minne
         }
 
 
-        private static int RecursiveOdd(int n)
+        public static int RecursiveOdd(int n)
         {
             if (n == 1)
             {
@@ -140,7 +137,7 @@ namespace SkalProj_Datastrukturer_Minne
             }
             return (RecursiveOdd(n - 1) + 2);
         }
-        private static int RecursiveEven(int n)
+        public static int RecursiveEven(int n)
         {
             if (n == 0)
             {
@@ -373,7 +370,7 @@ namespace SkalProj_Datastrukturer_Minne
             }
         }
 
-        private static string ReverseString(string input)
+        public static string ReverseString(string input)
         {
             StringBuilder result = new();
             Stack<char> stack = new Stack<char>();
@@ -394,10 +391,22 @@ namespace SkalProj_Datastrukturer_Minne
             //THE PLAN: Gör en stack, gå igenom strängen en karaktär i taget, om karaktären är {, [ eller (, lägg den i stacken.
             //Om karaktären är en ), ] eller }, kolla i stacken. Om den Pop'ade karaktären från stacken är motsvarande öppnare så allt bra.
             //Om stacken är tom eller Pop'ade karaktären inte är korrekt öppningsparantes är strängen ogiltigt skriven.
-            Stack<char> stack = new Stack<char>();
-            bool stringIsValid = true;
+            
             Console.WriteLine("Write the text you would like to check:");
             string str = Console.ReadLine()!;
+            bool stringIsValid = CheckValidityOfParantheses(str);
+            Console.Clear();
+            if (stringIsValid)
+            {
+                Console.WriteLine("The input string has properly closed parantheses.\n");
+            }
+            else { Console.WriteLine("The input string did -not- have properly closed parantheses.\n"); }
+        }
+
+        public static bool CheckValidityOfParantheses(string str)
+        {
+            Stack<char> stack = new Stack<char>();
+            bool stringIsValid = true;
             foreach (char c in str)
             {
                 if (c == '{' || c == '[' || c == '(') { stack.Push(c); }
@@ -406,7 +415,7 @@ namespace SkalProj_Datastrukturer_Minne
                     switch (c)
                     {
                         case '}':
-                            if (stack.Count == 0 ||stack.First<char>() != '{') { stringIsValid = false; }
+                            if (stack.Count == 0 || stack.First<char>() != '{') { stringIsValid = false; }
                             else { stack.Pop(); }
                             break;
 
@@ -424,13 +433,8 @@ namespace SkalProj_Datastrukturer_Minne
             }
             if (stack.Count > 0) { stringIsValid = false; }
 
-            Console.Clear();
-            if (stringIsValid)
-            {
-                Console.WriteLine("The input string has properly closed parantheses.\n");
-            }
-            else { Console.WriteLine("The input string did -not- have properly closed parantheses.\n"); }
-         }
+            return stringIsValid;
+        }
     }
 }
 
